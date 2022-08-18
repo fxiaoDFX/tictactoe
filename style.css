@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-grid {
+    aspect-ratio: 1 / 1;
+    width: 75vh;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    background-color: black;
+    border: 8px solid darkblue;
+    gap: 15px;
+}
+
+.cell {
+    background-color: white;
+}
