@@ -7,7 +7,7 @@
     --board-color: black;
     --cell-size: 100px;
     --cell-color: white;
-    --marker-size: cal(var(--cell-size * 0.9));
+    --marker-size: calc(var(--cell-size) * 0.9);
 }
 
 body {
@@ -24,6 +24,8 @@ body {
 }
 
 .board {
+    width: calc(var(--cell-size) * 3);
+    height: calc(var(--cell-size) * 3);
     display: grid;
     grid-template-columns: repeat(3, auto);
     justify-content: center;
@@ -36,12 +38,18 @@ body {
     width: var(--cell-size);
     height: var(--cell-size);
     background-color: var(--cell-color);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+
 }
 
+/* X shape */
 .cell.x::before,
-.cell.x::after{
+.cell.x::after {
     content: '';
-    width:auto;
-    height: auto;
+    width: var(--marker-size);
+    height: var(--marker-size);
     background-color: black;
 }
