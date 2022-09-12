@@ -3,24 +3,45 @@
     padding: 0;
 }
 
+:root {
+    --board-color: black;
+    --cell-size: 100px;
+    --cell-color: white;
+    --marker-size: cal(var(--cell-size * 0.9));
+}
+
 body {
+    margin: 0;
+    padding: 0;
+}
+
+.display {
+    width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
+    display:flex;
     justify-content: center;
     align-items: center;
 }
 
-.game-grid {
-    aspect-ratio: 1 / 1;
-    width: 75vh;
+.board {
     display: grid;
-    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    background-color: black;
-    border: 8px solid darkblue;
-    gap: 15px;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    align-content: center;
+    background-color: var(--board-color);
+    gap: 8px; 
 }
 
 .cell {
-    background-color: white;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background-color: var(--cell-color);
+}
+
+.cell.x::before,
+.cell.x::after{
+    content: '';
+    width:auto;
+    height: auto;
+    background-color: black;
 }
