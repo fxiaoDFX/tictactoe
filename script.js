@@ -1,18 +1,22 @@
 const gameController = (() => {
     const cells = document.querySelectorAll('[data-cell]');
-    let xTurn = true;
+    const board = document.getElementById('board');
+    let xTurn;
     const x = 'x';
     const circle = 'circle';
 
-    // start game
-    circleTurn = false;
-    cells.forEach(cell => {
-        cell.addEventListener('click', handleClick, {once : true});
-    });
+    /**
+     * Set up cells an enable hover
+     */
+    function startGame() {
+        cells.forEach(cell => {
+            cell.addEventListener('click', handleClick, {once: true});
+        });
+        xTurn = true;
+        setBoardClassHover();
+    }
 
     function handleClick(e) {
-        console.log('clicked');
-
         const cell = e.target;
         const currentMark = xTurn ? x : circle;
         // placeMark
@@ -20,6 +24,8 @@ const gameController = (() => {
         // check for win
         // check for draw
         // switch turns
+        switchTurns();
+        setBoardClassHover();  
     }
 
     /**
@@ -30,7 +36,22 @@ const gameController = (() => {
         return cells;
     }
 
-    return {getCells};
+    function switchTurns() {
+        xTurn = !xTurn;
+    }
+
+    function setBoardClassHover() {
+        board.className = 'board';
+        if (xTurn) {
+            board.classList.add(x);
+        } else {
+            board.classList.add(circle);
+        }
+    }
+
+    startGame();
+
+    return { getCells };
 })();
 
 const displayController = (() => {
@@ -63,6 +84,5 @@ const displayController = (() => {
         })
     }
 
-
-    return {placeMark, resetGame};
+    return { placeMark, resetGame };
 })();
