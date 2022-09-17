@@ -2,10 +2,10 @@ const gameController = (() => {
     const cells = document.querySelectorAll('[data-cell]');
     const winnerText = document.querySelector('[data-winner-text]');
     const board = document.getElementById('board');
-    let xTurn;
     const x = 'x';
     const circle = 'circle';
     let currentMark = null;
+    let xTurn = null;
     const WinningCombinations = [
         [0, 1, 2],
         [3, 4, 5],
@@ -15,7 +15,7 @@ const gameController = (() => {
         [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6]
-    ]
+    ];
 
     /**
      * Set up cells an enable hover
@@ -37,7 +37,7 @@ const gameController = (() => {
         // check for win
         if (checkWin(currentMark)) {
             endGame(false);
-        // check for draw
+            // check for draw
         } else if (isDraw()) {
             endGame(true);
         }
@@ -46,14 +46,6 @@ const gameController = (() => {
             switchTurns();
             setBoardClassHover();
         }
-    }
-
-    /**
-     * Get list of cells
-     * @return {NodeList} a list of cells
-     */
-    function getCells() {
-        return cells;
     }
 
     function switchTurns() {
@@ -117,46 +109,42 @@ const gameController = (() => {
         }
     }
 
-    startGame();
+    /**
+     * Clear values and reset board. Hide game result screen.
+     */
+    function resetGame() {
+        cells.forEach(cell => cell.className = 'cell');
+        displayController.hideScreen();
+        xTurn = null;
+        currentMark = null;
+        startGame();
+    }
 
-    return { getCells };
+    // restart game button
+    const restartButton = document.getElementById('restartButton');
+    restartButton.addEventListener('click', resetGame);
+
+    startGame();
 })();
 
 const displayController = (() => {
     const gameResultScreen = document.getElementById('displayWinner');
-    
+
     // place mark of current player when cell is clicked
     const placeMark = (cell, currentMark) => {
         cell.classList.add(currentMark);
     }
-    // reset board when game over or click reset button
-    const restartButton = document.getElementById('restartButton');
-    restartButton.addEventListener('click', resetGame);
 
     function showGameResult() {
         gameResultScreen.classList.add('show');
     }
 
     /**
-     * Hide winner screen and clear the board
+     * Hide winner screen
      */
-    function resetGame() {
-        
-        displayWinnerScreen.classList.remove('show');
-
-        const cells = gameController.getCells();
-        removeMark(cells);
+    function hideScreen() {
+        gameResultScreen.classList.remove('show');
     }
 
-    /**
-     * Remove all marks on the board
-     * @param {NodeList} list of cells
-     */
-    function removeMark(list) {
-        list.forEach(cell => {
-            cell.className = 'cell';
-        })
-    }
-
-    return { placeMark, resetGame, showGameResult };
+    return { placeMark, hideScreen, showGameResult };
 })();
